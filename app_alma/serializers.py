@@ -6,7 +6,6 @@ from .models import (
     StudentProfile,
     Payment,
     Coach,
-    TrainingSession,
 )
 
 
