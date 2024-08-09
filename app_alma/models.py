@@ -53,14 +53,3 @@ class Coach(models.Model):
 
     def __str__(self) -> str:
         return self.nome
-
-
-class TrainingSession(models.Model):
-    date = models.DateTimeField()
-    description = models.TextField(max_length=255)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
-    coach_id = models.ForeignKey(Coach, on_delete=models.CASCADE)
-    student_id = models.ForeignKey(Student, on_delete=models.CASCADE)
-
-    def __str__(self) -> str:
-        return f"{self.student_id.name} - {self.category_id.name} - {self.date}"
