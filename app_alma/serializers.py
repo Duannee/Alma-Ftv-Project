@@ -1,7 +1,6 @@
 from rest_framework import serializers
 from .models import (
     Account,
-    Category,
     Student,
     StudentProfile,
     Payment,
@@ -20,14 +19,7 @@ class AccountSerializer(serializers.ModelSerializer):
         }
 
 
-class CategorySerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Category
-        fields = "__all__"
-
-
 class StudentSerializer(serializers.ModelSerializer):
-    category = CategorySerializer(many=True)
 
     class Meta:
         model = Student

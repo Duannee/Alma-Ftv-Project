@@ -8,21 +8,13 @@ class Account(models.Model):
     is_superuser = models.BooleanField()
 
 
-class Category(models.Model):
-    name = models.CharField(max_length=255)
-    description = models.CharField(max_length=255)
-
-    def __str__(self) -> str:
-        return self.nome
-
-
 class Student(models.Model):
     name = models.CharField(max_length=255)
     age = models.IntegerField()
     payment_status = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.TextField(max_length=20)
-    category_id = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.CharField(max_length=20)
 
     def __str__(self) -> str:
         return self.nome

@@ -4,10 +4,9 @@ from rest_framework.generics import (
 )
 
 
-from .models import Account, Category, Student, StudentProfile, Payment, Coach
+from .models import Account, Student, StudentProfile, Payment, Coach
 from .serializers import (
     AccountSerializer,
-    CategorySerializer,
     StudentSerializer,
     StudentProfileSerializer,
     PaymentSerializer,
@@ -23,16 +22,6 @@ class ListCreateAccountView(ListCreateAPIView):
 class RetrieveUpdateDestroyAccountView(RetrieveUpdateDestroyAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
-
-
-class ListCreateCategoryView(ListCreateAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
-
-
-class RetrieveUpdateDestroyCategoryView(RetrieveUpdateDestroyAPIView):
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
 
 
 class ListCreateStudentView(ListCreateAPIView):
