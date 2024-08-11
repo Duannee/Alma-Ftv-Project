@@ -27,11 +27,13 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(many=True)
+    # student = StudentSerializer(many=True)
 
     class Meta:
         model = StudentProfile
-        fields = "__all__"
+        fields = ["id", "goal", "progress", "feedback", "student"]
+        depth = 1
+        read_only_fields = ["student"]
 
 
 class PaymentSerializer(serializers.ModelSerializer):

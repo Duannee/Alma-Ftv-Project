@@ -1,6 +1,8 @@
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
+    CreateAPIView,
+    ListAPIView,
 )
 
 
@@ -12,6 +14,7 @@ from .serializers import (
     PaymentSerializer,
     CoachSerializer,
 )
+from django.shortcuts import get_object_or_404
 
 
 class ListCreateAccountView(ListCreateAPIView):
@@ -34,7 +37,15 @@ class RetrieveUpdateDestroyStudentView(RetrieveUpdateDestroyAPIView):
     serializer_class = StudentSerializer
 
 
-class ListCreateStudentProfileView(ListCreateAPIView):
+class CreateStudentProfileView(CreateAPIView):
+    serializer_class = StudentProfileSerializer
+
+    def perform_create(self, serializer):
+        found_student = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
+        return serializer.save(student=found_student)
+
+
+class ListStudentProfileView(ListAPIView):
     queryset = StudentProfile.objects.all()
     serializer_class = StudentProfileSerializer
 
