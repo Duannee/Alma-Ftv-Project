@@ -1,6 +1,12 @@
 from django.db import models
 
 
+class PaymentStatusChoices(models.TextChoices):
+    UP_TO_DATE = "Up to date"
+    PENDING = "Pending"
+    LATE = "Late"
+
+
 class Account(models.Model):
     username = models.CharField(max_length=255)
     password = models.TextField(max_length=255)
@@ -30,7 +36,11 @@ class StudentProfile(models.Model):
 class Payment(models.Model):
     pay_day = models.DateField()
     value = models.DecimalField(decimal_places=2, max_digits=6)
-    status = models.BooleanField()
+    status = models.CharField(
+        max_length=20,
+        choices=PaymentStatusChoices.choices,
+        default=PaymentStatusChoices.UP_TO_DATE,
+    )
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
     def __str__(self) -> str:

@@ -1,11 +1,5 @@
 from rest_framework import serializers
-from .models import (
-    Account,
-    Student,
-    StudentProfile,
-    Payment,
-    Coach,
-)
+from .models import Account, Student, StudentProfile, Payment, Coach
 
 
 class AccountSerializer(serializers.ModelSerializer):
@@ -37,7 +31,6 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 
 
 class PaymentSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(many=True)
 
     class Meta:
         model = Payment
