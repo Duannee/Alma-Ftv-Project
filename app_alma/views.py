@@ -55,7 +55,17 @@ class RetrieveUpdateDestroyStudentProfileView(RetrieveUpdateDestroyAPIView):
     serializer_class = StudentProfileSerializer
 
 
-class ListCreatePaymentView(ListCreateAPIView):
+class CreatePaymentView(CreateAPIView):
+    serializer_class = PaymentSerializer
+
+    def perform_create(self, serializer):
+        found_student_payment = get_object_or_404(
+            Student, pk=self.kwargs.get("student_id")
+        )
+        return serializer.save(student=found_student_payment)
+
+
+class ListPaymentView(ListAPIView):
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
 

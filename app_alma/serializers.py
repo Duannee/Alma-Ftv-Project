@@ -34,7 +34,9 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = "__all__"
+        fields = ["id", "pay_day", "value", "status", "student"]
+        depth = 1
+        read_only_fields = ["student"]
 
 
 class CoachSerializer(serializers.ModelSerializer):

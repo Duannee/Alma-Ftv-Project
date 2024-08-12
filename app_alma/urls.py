@@ -5,12 +5,13 @@ from .views import (
     ListCreateStudentView,
     RetrieveUpdateDestroyStudentView,
     RetrieveUpdateDestroyStudentProfileView,
-    ListCreatePaymentView,
     RetrieveUpdateDestroyPaymentView,
-    ListCreateCoachView,
-    RetrieveUpdateDestroyCoachView,
+    # ListCreateCoachView,
+    # RetrieveUpdateDestroyCoachView,
     CreateStudentProfileView,
     ListStudentProfileView,
+    CreatePaymentView,
+    ListPaymentView,
 )
 
 urlpatterns = [
@@ -24,4 +25,7 @@ urlpatterns = [
     path(
         "student_profile/<int:pk>/", RetrieveUpdateDestroyStudentProfileView.as_view()
     ),
+    path("payment/<int:student_id>/student", CreatePaymentView.as_view()),
+    path("payment/", ListPaymentView.as_view()),
+    path("payment/<int:pk>/", RetrieveUpdateDestroyPaymentView.as_view()),
 ]
