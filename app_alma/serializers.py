@@ -25,7 +25,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentProfile
-        fields = ["id", "goal", "progress", "feedback", "student"]
+        fields = ["id", "student", "goal", "progress", "feedback"]
         depth = 1
         read_only_fields = ["student"]
 
@@ -34,7 +34,7 @@ class PaymentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Payment
-        fields = ["id", "pay_day", "value", "status", "student"]
+        fields = ["id", "student", "pay_day", "value", "status"]
         depth = 1
         read_only_fields = ["student"]
 

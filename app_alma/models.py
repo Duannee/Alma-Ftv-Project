@@ -27,10 +27,10 @@ class Student(models.Model):
 
 
 class StudentProfile(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
     goal = models.TextField(max_length=255)
     progress = models.TextField(max_length=255)
     feedback = models.TextField(max_length=255)
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
 
 
 class Payment(models.Model):
