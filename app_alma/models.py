@@ -17,7 +17,6 @@ class Account(models.Model):
 class Student(models.Model):
     name = models.CharField(max_length=255)
     age = models.IntegerField()
-    payment_status = models.CharField(max_length=50)
     email = models.EmailField()
     phone = models.TextField(max_length=20)
     category = models.CharField(max_length=20, default="")
