@@ -1,3 +1,4 @@
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -41,8 +42,13 @@ class CreateStudentProfileView(CreateAPIView):
     serializer_class = StudentProfileSerializer
 
     def perform_create(self, serializer):
-        found_student = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
-        return serializer.save(student=found_student)
+        student = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
+
+        if StudentProfile.objects.filter(student=student).exists():
+            raise ValidationError(
+                {"detail": "A profile with this student ID already exists."}
+            )
+        return serializer.save(student=student)
 
 
 class ListStudentProfileView(ListAPIView):
@@ -59,10 +65,13 @@ class CreatePaymentView(CreateAPIView):
     serializer_class = PaymentSerializer
 
     def perform_create(self, serializer):
-        found_student_payment = get_object_or_404(
-            Student, pk=self.kwargs.get("student_id")
-        )
-        return serializer.save(student=found_student_payment)
+        student_payment = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
+
+        if Payment.objects.filter(student=student_payment).exists():
+            raise ValidationError(
+                {"error": "Already exists a payment for this student"}
+            )
+        return serializer.save(student=student_payment)
 
 
 class ListPaymentView(ListAPIView):
