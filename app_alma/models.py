@@ -11,7 +11,7 @@ class Account(models.Model):
     username = models.CharField(max_length=255)
     password = models.TextField(max_length=255)
     email = models.EmailField()
-    is_superuser = models.BooleanField()
+    is_superuser = models.BooleanField(default=False)
 
 
 class Student(models.Model):

@@ -1,4 +1,5 @@
 from rest_framework.exceptions import ValidationError
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
@@ -24,21 +25,25 @@ class ListCreateAccountView(ListCreateAPIView):
 
 
 class RetrieveUpdateDestroyAccountView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
 
 class ListCreateStudentView(ListCreateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 
 class RetrieveUpdateDestroyStudentView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 
 class CreateStudentProfileView(CreateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = StudentProfileSerializer
 
     def perform_create(self, serializer):
@@ -57,11 +62,13 @@ class ListStudentProfileView(ListAPIView):
 
 
 class RetrieveUpdateDestroyStudentProfileView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = StudentProfile.objects.all()
     serializer_class = StudentProfileSerializer
 
 
 class CreatePaymentView(CreateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     serializer_class = PaymentSerializer
 
     def perform_create(self, serializer):
@@ -80,15 +87,18 @@ class ListPaymentView(ListAPIView):
 
 
 class RetrieveUpdateDestroyPaymentView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
 
 
 class ListCreateCoachView(ListCreateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
     serializer_class = CoachSerializer
 
 
 class RetrieveUpdateDestroyCoachView(RetrieveUpdateDestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
     serializer_class = CoachSerializer

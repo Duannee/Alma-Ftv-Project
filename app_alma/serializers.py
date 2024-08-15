@@ -6,6 +6,7 @@ class AccountSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = "__all__"
+        read_only_fields = ["is_superuser"]
         extra_kwargs = {
             "password": {
                 "write_only": True,
