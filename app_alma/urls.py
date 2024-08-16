@@ -1,7 +1,8 @@
 from django.urls import path
 from rest_framework_simplejwt import views
 from .views import (
-    ListCreateAccountView,
+    CreateAccountView,
+    ListAccountView,
     RetrieveUpdateDestroyAccountView,
     ListCreateStudentView,
     RetrieveUpdateDestroyStudentView,
@@ -20,8 +21,8 @@ urlpatterns = [
     path("token/", views.TokenObtainPairView.as_view()),
     path("token/refresh/", views.TokenRefreshView.as_view()),
     # Account routes
-    path("account/create/", ListCreateAccountView.as_view()),
-    path("account/list/", ListCreateAccountView.as_view()),
+    path("account/create/", CreateAccountView.as_view()),
+    path("account/list/", ListAccountView.as_view()),
     path("account/<int:pk>/retrieve/", RetrieveUpdateDestroyAccountView.as_view()),
     path("account/<int:pk>/update/", RetrieveUpdateDestroyAccountView.as_view()),
     path("account/<int:pk>/delete/", RetrieveUpdateDestroyAccountView.as_view()),

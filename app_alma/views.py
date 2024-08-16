@@ -19,7 +19,31 @@ from .serializers import (
 from django.shortcuts import get_object_or_404
 
 
-class ListCreateAccountView(ListCreateAPIView):
+class CreateAccountView(CreateAPIView):
+    serializer_class = AccountSerializer
+
+    def perform_create(self, serializer):
+        username = serializer.validated_data.get("username")
+        email = serializer.validated_data.get("email")
+
+        if Account.objects.filter(username=username).exists():
+            raise ValidationError(
+                {
+                    "error": "An account with this username already exists, please choose another."
+                }
+            )
+
+        if Account.objects.filter(email=email).exists():
+            raise ValidationError(
+                {
+                    "error": "An account with this email already exists, please choose another."
+                }
+            )
+
+        return serializer.save()
+
+
+class ListAccountView(ListAPIView):
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
