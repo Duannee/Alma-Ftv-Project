@@ -23,26 +23,6 @@ class CreateAccountView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
-    # def perform_create(self, serializer):
-    #     username = serializer.validated_data.get("username")
-    #     email = serializer.validated_data.get("email")
-
-    #     if Account.objects.filter(username=username).exists():
-    #         raise ValidationError(
-    #             {
-    #                 "error": "An account with this username already exists, please choose another."
-    #             }
-    #         )
-
-    #     if Account.objects.filter(email=email).exists():
-    #         raise ValidationError(
-    #             {
-    #                 "error": "An account with this email already exists, please choose another."
-    #             }
-    #         )
-
-    #     return serializer.save()
-
 
 class ListAccountView(ListAPIView):
     queryset = User.objects.all()

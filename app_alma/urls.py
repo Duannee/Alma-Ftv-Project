@@ -20,12 +20,12 @@ urlpatterns = [
     # Token routes
     path("token/", views.TokenObtainPairView.as_view()),
     path("token/refresh/", views.TokenRefreshView.as_view()),
-    # Account routes
-    path("account/create/", CreateAccountView.as_view()),
-    path("account/list/", ListAccountView.as_view()),
-    path("account/<int:pk>/retrieve/", RetrieveUpdateDestroyAccountView.as_view()),
-    path("account/<int:pk>/update/", RetrieveUpdateDestroyAccountView.as_view()),
-    path("account/<int:pk>/delete/", RetrieveUpdateDestroyAccountView.as_view()),
+    # User routes
+    path("user/create/", CreateAccountView.as_view()),
+    path("user/list/", ListAccountView.as_view()),
+    path("user/<int:pk>/retrieve/", RetrieveUpdateDestroyAccountView.as_view()),
+    path("user/<int:pk>/update/", RetrieveUpdateDestroyAccountView.as_view()),
+    path("user/<int:pk>/delete/", RetrieveUpdateDestroyAccountView.as_view()),
     # Students routes
     path("student/create/", ListCreateStudentView.as_view()),
     path("student/list/", ListCreateStudentView.as_view()),
