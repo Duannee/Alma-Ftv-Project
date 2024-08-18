@@ -1,11 +1,11 @@
 from rest_framework import serializers
-from .models import Account, Student, StudentProfile, Payment, Coach
+from .models import Student, StudentProfile, Payment, Coach, User
 
 
-class AccountSerializer(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Account
-        fields = "__all__"
+        model = User
+        fields = ["id", "username", "password", "email"]
         read_only_fields = ["is_superuser"]
         extra_kwargs = {
             "password": {

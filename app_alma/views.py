@@ -8,9 +8,9 @@ from rest_framework.generics import (
 )
 
 
-from .models import Account, Student, StudentProfile, Payment, Coach
+from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
-    AccountSerializer,
+    UserSerializer,
     StudentSerializer,
     StudentProfileSerializer,
     PaymentSerializer,
@@ -20,38 +20,39 @@ from django.shortcuts import get_object_or_404
 
 
 class CreateAccountView(CreateAPIView):
-    serializer_class = AccountSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
-    def perform_create(self, serializer):
-        username = serializer.validated_data.get("username")
-        email = serializer.validated_data.get("email")
+    # def perform_create(self, serializer):
+    #     username = serializer.validated_data.get("username")
+    #     email = serializer.validated_data.get("email")
 
-        if Account.objects.filter(username=username).exists():
-            raise ValidationError(
-                {
-                    "error": "An account with this username already exists, please choose another."
-                }
-            )
+    #     if Account.objects.filter(username=username).exists():
+    #         raise ValidationError(
+    #             {
+    #                 "error": "An account with this username already exists, please choose another."
+    #             }
+    #         )
 
-        if Account.objects.filter(email=email).exists():
-            raise ValidationError(
-                {
-                    "error": "An account with this email already exists, please choose another."
-                }
-            )
+    #     if Account.objects.filter(email=email).exists():
+    #         raise ValidationError(
+    #             {
+    #                 "error": "An account with this email already exists, please choose another."
+    #             }
+    #         )
 
-        return serializer.save()
+    #     return serializer.save()
 
 
 class ListAccountView(ListAPIView):
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class RetrieveUpdateDestroyAccountView(RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    queryset = Account.objects.all()
-    serializer_class = AccountSerializer
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
 
 
 class ListCreateStudentView(ListCreateAPIView):

@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 
 class PaymentStatusChoices(models.TextChoices):
@@ -7,10 +8,10 @@ class PaymentStatusChoices(models.TextChoices):
     LATE = "Late"
 
 
-class Account(models.Model):
-    username = models.CharField(max_length=255)
+class User(AbstractUser):
+    username = models.CharField(max_length=255, unique=True)
     password = models.TextField(max_length=255)
-    email = models.EmailField()
+    email = models.EmailField(unique=True)
     is_superuser = models.BooleanField(default=False)
 
 
