@@ -155,4 +155,15 @@ SPECTACULAR_SETTINGS = {
     "DESCRIPTION": "Management of the alma footvolley training center",
     "VERSION": "0.1.0",
     "SERVE_INCLUDE_SCHEMA": False,
+    "TAGS": [
+        {"name": "Token", "description": "Token related operations"},
+        {"name": "User", "description": "User related operations"},
+        {"name": "Student", "description": "Student related operations"},
+        {
+            "name": "Student Profile",
+            "description": "Student Profile related operations",
+        },
+        {"name": "Payment", "description": "Payment related operations"},
+        {"name": "Coach", "description": "Coach related operations"},
+    ],
 }
