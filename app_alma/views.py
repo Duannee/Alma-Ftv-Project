@@ -5,6 +5,9 @@ from rest_framework.generics import (
     RetrieveUpdateDestroyAPIView,
     CreateAPIView,
     ListAPIView,
+    RetrieveAPIView,
+    DestroyAPIView,
+    UpdateAPIView,
 )
 
 
@@ -17,8 +20,10 @@ from .serializers import (
     CoachSerializer,
 )
 from django.shortcuts import get_object_or_404
+from drf_spectacular.utils import extend_schema_view, extend_schema
 
 
+@extend_schema_view(create=extend_schema(tags=["User"]))
 class CreateAccountView(CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
@@ -29,19 +34,46 @@ class ListAccountView(ListAPIView):
     serializer_class = UserSerializer
 
 
-class RetrieveUpdateDestroyAccountView(RetrieveUpdateDestroyAPIView):
+class RetrieveAccountView(RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class UpdateAccountView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
 
-class ListCreateStudentView(ListCreateAPIView):
+class DeleteAccountView(DestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class CreateStudentView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
 
 
-class RetrieveUpdateDestroyStudentView(RetrieveUpdateDestroyAPIView):
+class ListStudentView(ListAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class RetrieveStudentView(RetrieveAPIView):
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class UpdateStudentView(UpdateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = Student.objects.all()
+    serializer_class = StudentSerializer
+
+
+class DeleteStudentView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
     serializer_class = StudentSerializer
@@ -66,7 +98,18 @@ class ListStudentProfileView(ListAPIView):
     serializer_class = StudentProfileSerializer
 
 
-class RetrieveUpdateDestroyStudentProfileView(RetrieveUpdateDestroyAPIView):
+class RetrieveStudentProfileView(RetrieveAPIView):
+    queryset = StudentProfile.objects.all()
+    serializer_class = StudentProfileSerializer
+
+
+class UpdateStudentProfileView(UpdateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = StudentProfile.objects.all()
+    serializer_class = StudentProfileSerializer
+
+
+class DeleteStudentProfileView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = StudentProfile.objects.all()
     serializer_class = StudentProfileSerializer
@@ -91,19 +134,46 @@ class ListPaymentView(ListAPIView):
     serializer_class = PaymentSerializer
 
 
-class RetrieveUpdateDestroyPaymentView(RetrieveUpdateDestroyAPIView):
+class RetrievePaymentView(RetrieveAPIView):
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+
+class UpdatePaymentView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
 
 
-class ListCreateCoachView(ListCreateAPIView):
+class DeletePaymentView(DestroyAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = Payment.objects.all()
+    serializer_class = PaymentSerializer
+
+
+class CreateCoachView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
     serializer_class = CoachSerializer
 
 
-class RetrieveUpdateDestroyCoachView(RetrieveUpdateDestroyAPIView):
+class ListCoachView(ListAPIView):
+    queryset = Coach.objects.all()
+    serializer_class = CoachSerializer
+
+
+class RetrieveCoachView(RetrieveAPIView):
+    queryset = Coach.objects.all()
+    serializer_class = CoachSerializer
+
+
+class UpdateCoachView(UpdateAPIView):
+    permission_classes = [IsAuthenticatedOrReadOnly]
+    queryset = Coach.objects.all()
+    serializer_class = CoachSerializer
+
+
+class DeleteCoachView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
     serializer_class = CoachSerializer

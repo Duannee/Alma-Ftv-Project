@@ -33,7 +33,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
-    # student = StudentSerializer(many=True)
+    student = StudentSerializer(many=True)
 
     class Meta:
         model = StudentProfile
@@ -43,6 +43,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 
 
 class PaymentSerializer(serializers.ModelSerializer):
+    student = StudentSerializer(many=True)
 
     class Meta:
         model = Payment
