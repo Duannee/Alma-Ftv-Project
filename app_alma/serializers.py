@@ -3,7 +3,7 @@ from .models import Student, StudentProfile, Payment, Coach, User
 from rest_framework.exceptions import ValidationError
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserSerializerPostPutPatch(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password", "email"]
@@ -39,6 +39,17 @@ class UserSerializer(serializers.ModelSerializer):
         return field_names
 
 
+class UserSerializerGetDelete(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["id", "username", "password", "email"]
+        extra_kwargs = {
+            "password": {
+                "write_only": True,
+            }
+        }
+
+
 class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
@@ -47,7 +58,7 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(many=True)
+    # student = StudentSerializer()
 
     class Meta:
         model = StudentProfile
@@ -57,7 +68,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 
 
 class PaymentSerializer(serializers.ModelSerializer):
-    student = StudentSerializer(many=True)
+    # student = StudentSerializer(many=True)
 
     class Meta:
         model = Payment

@@ -11,7 +11,8 @@ from rest_framework.generics import (
 
 from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
-    UserSerializer,
+    UserSerializerPostPutPatch,
+    UserSerializerGetDelete,
     StudentSerializer,
     StudentProfileSerializer,
     PaymentSerializer,
@@ -24,33 +25,33 @@ from drf_spectacular.utils import extend_schema
 @extend_schema(tags=["User"])
 class CreateAccountView(CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerPostPutPatch
 
 
 @extend_schema(tags=["User"])
 class ListAccountView(ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerGetDelete
 
 
 @extend_schema(tags=["User"])
 class RetrieveAccountView(RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerGetDelete
 
 
 @extend_schema(tags=["User"])
 class UpdateAccountView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerPostPutPatch
 
 
 @extend_schema(tags=["User"])
 class DeleteAccountView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
-    serializer_class = UserSerializer
+    serializer_class = UserSerializerGetDelete
 
 
 @extend_schema(tags=["Student"])
