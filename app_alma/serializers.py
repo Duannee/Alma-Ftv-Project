@@ -1,12 +1,12 @@
-from rest_framework import serializers
+from rest_framework import serializers, status
 from .models import Student, StudentProfile, Payment, Coach, User
+from rest_framework.exceptions import ValidationError
 
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password", "email"]
-        read_only_fields = ["is_superuser"]
         extra_kwargs = {
             "password": {
                 "write_only": True,
@@ -23,6 +23,20 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
 
         return user
+
+    def get_field_names(self, declared_fields, info):
+        field_names = super().get_field_names(declared_fields, info)
+        model_fields = set(self.Meta.model._meta.get_fields())
+        model_field_names = {field.name for field in model_fields}
+
+        for field in self.initial_data.keys():
+            if field not in model_field_names:
+                raise ValidationError(
+                    {field: f"this field '{field}' does not exists."},
+                    code=status.HTTP_400_BAD_REQUEST,
+                )
+
+        return field_names
 
 
 class StudentSerializer(serializers.ModelSerializer):
