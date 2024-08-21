@@ -27,6 +27,7 @@ from .views import (
     UpdateCoachView,
     DeleteCoachView,
 )
+from drf_spectacular.utils import extend_schema
 
 urlpatterns = [
     # Token routes

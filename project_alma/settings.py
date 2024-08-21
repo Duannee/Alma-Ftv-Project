@@ -166,4 +166,5 @@ SPECTACULAR_SETTINGS = {
         {"name": "Payment", "description": "Payment related operations"},
         {"name": "Coach", "description": "Coach related operations"},
     ],
+    "SORT_OPERATIONS": False,
 }

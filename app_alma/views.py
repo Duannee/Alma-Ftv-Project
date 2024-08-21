@@ -1,8 +1,6 @@
 from rest_framework.exceptions import ValidationError
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from rest_framework.generics import (
-    ListCreateAPIView,
-    RetrieveUpdateDestroyAPIView,
     CreateAPIView,
     ListAPIView,
     RetrieveAPIView,
