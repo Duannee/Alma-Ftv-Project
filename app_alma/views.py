@@ -13,11 +13,12 @@ from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
     UserSerializerPostPutPatch,
     UserSerializerGetDelete,
-    StudentSerializerPostPathPut,
+    StudentSerializerPostPatchPut,
     StudentSerializerGetDelete,
     StudentProfileSerializerPostPatchPut,
     StudentProfileSerializerGetDelete,
-    PaymentSerializer,
+    PaymentSerializerPostPatchPut,
+    PaymentSerializerGetDelete,
     CoachSerializer,
 )
 from django.shortcuts import get_object_or_404
@@ -60,7 +61,7 @@ class DeleteAccountView(DestroyAPIView):
 class CreateStudentView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerPostPathPut
+    serializer_class = StudentSerializerPostPatchPut
 
 
 @extend_schema(tags=["Student"])
@@ -79,7 +80,7 @@ class RetrieveStudentView(RetrieveAPIView):
 class UpdateStudentView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerPostPathPut
+    serializer_class = StudentSerializerPostPatchPut
 
 
 @extend_schema(tags=["Student"])
@@ -133,7 +134,7 @@ class DeleteStudentProfileView(DestroyAPIView):
 @extend_schema(tags=["Payment"])
 class CreatePaymentView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentSerializerPostPatchPut
 
     def perform_create(self, serializer):
         student_payment = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
@@ -148,27 +149,27 @@ class CreatePaymentView(CreateAPIView):
 @extend_schema(tags=["Payment"])
 class ListPaymentView(ListAPIView):
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentSerializerGetDelete
 
 
 @extend_schema(tags=["Payment"])
 class RetrievePaymentView(RetrieveAPIView):
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentSerializerGetDelete
 
 
 @extend_schema(tags=["Payment"])
 class UpdatePaymentView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentSerializerPostPatchPut
 
 
 @extend_schema(tags=["Payment"])
 class DeletePaymentView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
+    serializer_class = PaymentSerializerGetDelete
 
 
 @extend_schema(tags=["Coach"])
