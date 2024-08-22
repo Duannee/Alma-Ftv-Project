@@ -13,7 +13,8 @@ from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
     UserSerializerPostPutPatch,
     UserSerializerGetDelete,
-    StudentSerializer,
+    StudentSerializerPostPathPut,
+    StudentSerializerGetDelete,
     StudentProfileSerializer,
     PaymentSerializer,
     CoachSerializer,
@@ -58,33 +59,33 @@ class DeleteAccountView(DestroyAPIView):
 class CreateStudentView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = StudentSerializerPostPathPut
 
 
 @extend_schema(tags=["Student"])
 class ListStudentView(ListAPIView):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = StudentSerializerGetDelete
 
 
 @extend_schema(tags=["Student"])
 class RetrieveStudentView(RetrieveAPIView):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = StudentSerializerGetDelete
 
 
 @extend_schema(tags=["Student"])
 class UpdateStudentView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = StudentSerializerPostPathPut
 
 
 @extend_schema(tags=["Student"])
 class DeleteStudentView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializer
+    serializer_class = StudentSerializerGetDelete
 
 
 @extend_schema(tags=["Student Profile"])
