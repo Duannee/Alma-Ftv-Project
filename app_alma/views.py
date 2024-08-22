@@ -19,7 +19,8 @@ from .serializers import (
     StudentProfileSerializerGetDelete,
     PaymentSerializerPostPatchPut,
     PaymentSerializerGetDelete,
-    CoachSerializer,
+    CoachSerializerPostPatchPut,
+    CoachSerializerGetDelete,
 )
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
@@ -176,30 +177,30 @@ class DeletePaymentView(DestroyAPIView):
 class CreateCoachView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializer
+    serializer_class = CoachSerializerPostPatchPut
 
 
 @extend_schema(tags=["Coach"])
 class ListCoachView(ListAPIView):
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializer
+    serializer_class = CoachSerializerGetDelete
 
 
 @extend_schema(tags=["Coach"])
 class RetrieveCoachView(RetrieveAPIView):
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializer
+    serializer_class = CoachSerializerGetDelete
 
 
 @extend_schema(tags=["Coach"])
 class UpdateCoachView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializer
+    serializer_class = CoachSerializerPostPatchPut
 
 
 @extend_schema(tags=["Coach"])
 class DeleteCoachView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializer
+    serializer_class = CoachSerializerGetDelete
