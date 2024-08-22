@@ -15,7 +15,8 @@ from .serializers import (
     UserSerializerGetDelete,
     StudentSerializerPostPathPut,
     StudentSerializerGetDelete,
-    StudentProfileSerializer,
+    StudentProfileSerializerPostPatchPut,
+    StudentProfileSerializerGetDelete,
     PaymentSerializer,
     CoachSerializer,
 )
@@ -91,7 +92,7 @@ class DeleteStudentView(DestroyAPIView):
 @extend_schema(tags=["Student Profile"])
 class CreateStudentProfileView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = StudentProfileSerializer
+    serializer_class = StudentProfileSerializerPostPatchPut
 
     def perform_create(self, serializer):
         student = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
@@ -106,27 +107,27 @@ class CreateStudentProfileView(CreateAPIView):
 @extend_schema(tags=["Student Profile"])
 class ListStudentProfileView(ListAPIView):
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializer
+    serializer_class = StudentProfileSerializerGetDelete
 
 
 @extend_schema(tags=["Student Profile"])
 class RetrieveStudentProfileView(RetrieveAPIView):
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializer
+    serializer_class = StudentProfileSerializerGetDelete
 
 
 @extend_schema(tags=["Student Profile"])
 class UpdateStudentProfileView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializer
+    serializer_class = StudentProfileSerializerPostPatchPut
 
 
 @extend_schema(tags=["Student Profile"])
 class DeleteStudentProfileView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializer
+    serializer_class = StudentProfileSerializerGetDelete
 
 
 @extend_schema(tags=["Payment"])

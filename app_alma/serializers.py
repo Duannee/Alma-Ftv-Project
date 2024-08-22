@@ -77,8 +77,30 @@ class StudentSerializerGetDelete(serializers.ModelSerializer):
         fields = "__all__"
 
 
-class StudentProfileSerializer(serializers.ModelSerializer):
-    # student = StudentSerializer()
+class StudentProfileSerializerPostPatchPut(serializers.ModelSerializer):
+
+    class Meta:
+        model = StudentProfile
+        fields = ["id", "student", "goal", "progress", "feedback"]
+        depth = 1
+        read_only_fields = ["student"]
+
+    def get_field_names(self, declared_fields, info):
+        field_names = super().get_field_names(declared_fields, info)
+        model_fields = set(self.Meta.model._meta.get_fields())
+        model_field_names = {field.name for field in model_fields}
+
+        for field in self.initial_data.keys():
+            if field not in model_field_names:
+                raise ValidationError(
+                    {field: f"this field '{field}' does not exists."},
+                    code=status.HTTP_400_BAD_REQUEST,
+                )
+
+        return field_names
+
+
+class StudentProfileSerializerGetDelete(serializers.ModelSerializer):
 
     class Meta:
         model = StudentProfile
