@@ -20,7 +20,7 @@ class Student(models.Model):
     age = models.IntegerField()
     email = models.EmailField()
     phone = models.TextField(max_length=20)
-    category = models.CharField(max_length=20, default="")
+    category = models.CharField(max_length=20)
 
     def __str__(self) -> str:
         return self.nome
