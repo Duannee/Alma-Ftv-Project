@@ -11,8 +11,7 @@ from rest_framework.generics import (
 
 from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
-    UserSerializerPostPutPatch,
-    UserSerializerGetDelete,
+    UserSerializer,
     StudentSerializer,
     StudentProfileSerializerPostPatchPut,
     StudentProfileSerializerGetDelete,
@@ -28,33 +27,43 @@ from drf_spectacular.utils import extend_schema
 @extend_schema(tags=["User"])
 class CreateAccountView(CreateAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializerPostPutPatch
+    serializer_class = UserSerializer
 
 
 @extend_schema(tags=["User"])
 class ListAccountView(ListAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializerGetDelete
+    serializer_class = UserSerializer
 
 
 @extend_schema(tags=["User"])
 class RetrieveAccountView(RetrieveAPIView):
     queryset = User.objects.all()
-    serializer_class = UserSerializerGetDelete
+    serializer_class = UserSerializer
 
 
 @extend_schema(tags=["User"])
 class UpdateAccountView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
-    serializer_class = UserSerializerPostPutPatch
+    serializer_class = UserSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        invalid_fields = [
+            key for key in request.data if key not in self.serializer_class().fields
+        ]
+
+        if invalid_fields:
+            raise ValidationError({"invalid_fields": invalid_fields})
+
+        return super().partial_update(request, *args, **kwargs)
 
 
 @extend_schema(tags=["User"])
 class DeleteAccountView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = User.objects.all()
-    serializer_class = UserSerializerGetDelete
+    serializer_class = UserSerializer
 
 
 @extend_schema(tags=["Student"])

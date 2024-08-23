@@ -3,7 +3,7 @@ from .models import Student, StudentProfile, Payment, Coach, User
 from rest_framework.exceptions import ValidationError
 
 
-class UserSerializerPostPutPatch(serializers.ModelSerializer):
+class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ["id", "username", "password", "email"]
@@ -13,16 +13,11 @@ class UserSerializerPostPutPatch(serializers.ModelSerializer):
             }
         }
 
-
-class UserSerializerGetDelete(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ["id", "username", "password", "email"]
-        extra_kwargs = {
-            "password": {
-                "write_only": True,
-            }
-        }
+    def validate(self, data):
+        for key in data.keys():
+            if key not in self.fields:
+                raise serializers.ValidationError({key: "This field does not exist."})
+        return data
 
 
 class StudentSerializer(serializers.ModelSerializer):
