@@ -13,31 +13,6 @@ class UserSerializerPostPutPatch(serializers.ModelSerializer):
             }
         }
 
-    def create(self, validated_data):
-        password = validated_data.pop("password")
-
-        user = User(**validated_data)
-
-        user.set_password(password)
-
-        user.save()
-
-        return user
-
-    def get_field_names(self, declared_fields, info):
-        field_names = super().get_field_names(declared_fields, info)
-        model_fields = set(self.Meta.model._meta.get_fields())
-        model_field_names = {field.name for field in model_fields}
-
-        for field in self.initial_data.keys():
-            if field not in model_field_names:
-                raise ValidationError(
-                    {field: f"this field '{field}' does not exists."},
-                    code=status.HTTP_400_BAD_REQUEST,
-                )
-
-        return field_names
-
 
 class UserSerializerGetDelete(serializers.ModelSerializer):
     class Meta:
@@ -50,25 +25,17 @@ class UserSerializerGetDelete(serializers.ModelSerializer):
         }
 
 
-class StudentSerializerPostPatchPut(serializers.ModelSerializer):
+class StudentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Student
         fields = "__all__"
 
-    def get_field_names(self, declared_fields, info):
-        field_names = super().get_field_names(declared_fields, info)
-        model_fields = set(self.Meta.model._meta.get_fields())
-        model_field_names = {field.name for field in model_fields}
-
-        for field in self.initial_data.keys():
-            if field not in model_field_names:
-                raise ValidationError(
-                    {field: f"this field '{field}' does not exists."},
-                    code=status.HTTP_400_BAD_REQUEST,
-                )
-
-        return field_names
+    def validate(self, data):
+        for key in data.keys():
+            if key not in self.fields:
+                raise serializers.ValidationError({key: "This field does not exist."})
+        return data
 
 
 class StudentSerializerGetDelete(serializers.ModelSerializer):
@@ -84,20 +51,6 @@ class StudentProfileSerializerPostPatchPut(serializers.ModelSerializer):
         fields = ["id", "student", "goal", "progress", "feedback"]
         depth = 1
         read_only_fields = ["student"]
-
-    def get_field_names(self, declared_fields, info):
-        field_names = super().get_field_names(declared_fields, info)
-        model_fields = set(self.Meta.model._meta.get_fields())
-        model_field_names = {field.name for field in model_fields}
-
-        for field in self.initial_data.keys():
-            if field not in model_field_names:
-                raise ValidationError(
-                    {field: f"this field '{field}' does not exists."},
-                    code=status.HTTP_400_BAD_REQUEST,
-                )
-
-        return field_names
 
 
 class StudentProfileSerializerGetDelete(serializers.ModelSerializer):
@@ -117,20 +70,6 @@ class PaymentSerializerPostPatchPut(serializers.ModelSerializer):
         depth = 1
         read_only_fields = ["student"]
 
-    def get_field_names(self, declared_fields, info):
-        field_names = super().get_field_names(declared_fields, info)
-        model_fields = set(self.Meta.model._meta.get_fields())
-        model_field_names = {field.name for field in model_fields}
-
-        for field in self.initial_data.keys():
-            if field not in model_field_names:
-                raise ValidationError(
-                    {field: f"this field '{field}' does not exists."},
-                    code=status.HTTP_400_BAD_REQUEST,
-                )
-
-        return field_names
-
 
 class PaymentSerializerGetDelete(serializers.ModelSerializer):
 
@@ -145,20 +84,6 @@ class CoachSerializerPostPatchPut(serializers.ModelSerializer):
     class Meta:
         model = Coach
         fields = "__all__"
-
-    def get_field_names(self, declared_fields, info):
-        field_names = super().get_field_names(declared_fields, info)
-        model_fields = set(self.Meta.model._meta.get_fields())
-        model_field_names = {field.name for field in model_fields}
-
-        for field in self.initial_data.keys():
-            if field not in model_field_names:
-                raise ValidationError(
-                    {field: f"this field '{field}' does not exists."},
-                    code=status.HTTP_400_BAD_REQUEST,
-                )
-
-        return field_names
 
 
 class CoachSerializerGetDelete(serializers.ModelSerializer):

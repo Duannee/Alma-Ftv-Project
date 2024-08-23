@@ -13,8 +13,7 @@ from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
     UserSerializerPostPutPatch,
     UserSerializerGetDelete,
-    StudentSerializerPostPatchPut,
-    StudentSerializerGetDelete,
+    StudentSerializer,
     StudentProfileSerializerPostPatchPut,
     StudentProfileSerializerGetDelete,
     PaymentSerializerPostPatchPut,
@@ -62,33 +61,43 @@ class DeleteAccountView(DestroyAPIView):
 class CreateStudentView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerPostPatchPut
+    serializer_class = StudentSerializer
 
 
 @extend_schema(tags=["Student"])
 class ListStudentView(ListAPIView):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerGetDelete
+    serializer_class = StudentSerializer
 
 
 @extend_schema(tags=["Student"])
 class RetrieveStudentView(RetrieveAPIView):
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerGetDelete
+    serializer_class = StudentSerializer
 
 
 @extend_schema(tags=["Student"])
 class UpdateStudentView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerPostPatchPut
+    serializer_class = StudentSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        invalid_fields = [
+            key for key in request.data if key not in self.serializer_class().fields
+        ]
+
+        if invalid_fields:
+            raise ValidationError({"invalid_fields": invalid_fields})
+
+        return super().partial_update(request, *args, **kwargs)
 
 
 @extend_schema(tags=["Student"])
 class DeleteStudentView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Student.objects.all()
-    serializer_class = StudentSerializerGetDelete
+    serializer_class = StudentSerializer
 
 
 @extend_schema(tags=["Student Profile"])
