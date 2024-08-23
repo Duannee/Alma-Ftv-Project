@@ -33,13 +33,7 @@ class StudentSerializer(serializers.ModelSerializer):
         return data
 
 
-class StudentSerializerGetDelete(serializers.ModelSerializer):
-    class Meta:
-        model = Student
-        fields = "__all__"
-
-
-class StudentProfileSerializerPostPatchPut(serializers.ModelSerializer):
+class StudentProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentProfile
@@ -47,14 +41,11 @@ class StudentProfileSerializerPostPatchPut(serializers.ModelSerializer):
         depth = 1
         read_only_fields = ["student"]
 
-
-class StudentProfileSerializerGetDelete(serializers.ModelSerializer):
-
-    class Meta:
-        model = StudentProfile
-        fields = ["id", "student", "goal", "progress", "feedback"]
-        depth = 1
-        read_only_fields = ["student"]
+    def validate(self, data):
+        for key in data.keys():
+            if key not in self.fields:
+                raise serializers.ValidationError({key: "This field does not exist."})
+        return data
 
 
 class PaymentSerializerPostPatchPut(serializers.ModelSerializer):

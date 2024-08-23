@@ -13,8 +13,7 @@ from .models import User, Student, StudentProfile, Payment, Coach
 from .serializers import (
     UserSerializer,
     StudentSerializer,
-    StudentProfileSerializerPostPatchPut,
-    StudentProfileSerializerGetDelete,
+    StudentProfileSerializer,
     PaymentSerializerPostPatchPut,
     PaymentSerializerGetDelete,
     CoachSerializerPostPatchPut,
@@ -112,7 +111,7 @@ class DeleteStudentView(DestroyAPIView):
 @extend_schema(tags=["Student Profile"])
 class CreateStudentProfileView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = StudentProfileSerializerPostPatchPut
+    serializer_class = StudentProfileSerializer
 
     def perform_create(self, serializer):
         student = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
@@ -127,27 +126,37 @@ class CreateStudentProfileView(CreateAPIView):
 @extend_schema(tags=["Student Profile"])
 class ListStudentProfileView(ListAPIView):
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializerGetDelete
+    serializer_class = StudentProfileSerializer
 
 
 @extend_schema(tags=["Student Profile"])
 class RetrieveStudentProfileView(RetrieveAPIView):
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializerGetDelete
+    serializer_class = StudentProfileSerializer
 
 
 @extend_schema(tags=["Student Profile"])
 class UpdateStudentProfileView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializerPostPatchPut
+    serializer_class = StudentProfileSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        invalid_fields = [
+            key for key in request.data if key not in self.serializer_class().fields
+        ]
+
+        if invalid_fields:
+            raise ValidationError({"invalid_fields": invalid_fields})
+
+        return super().partial_update(request, *args, **kwargs)
 
 
 @extend_schema(tags=["Student Profile"])
 class DeleteStudentProfileView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = StudentProfile.objects.all()
-    serializer_class = StudentProfileSerializerGetDelete
+    serializer_class = StudentProfileSerializer
 
 
 @extend_schema(tags=["Payment"])
