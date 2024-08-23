@@ -14,8 +14,7 @@ from .serializers import (
     UserSerializer,
     StudentSerializer,
     StudentProfileSerializer,
-    PaymentSerializerPostPatchPut,
-    PaymentSerializerGetDelete,
+    PaymentSerializer,
     CoachSerializerPostPatchPut,
     CoachSerializerGetDelete,
 )
@@ -162,7 +161,7 @@ class DeleteStudentProfileView(DestroyAPIView):
 @extend_schema(tags=["Payment"])
 class CreatePaymentView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
-    serializer_class = PaymentSerializerPostPatchPut
+    serializer_class = PaymentSerializer
 
     def perform_create(self, serializer):
         student_payment = get_object_or_404(Student, pk=self.kwargs.get("student_id"))
@@ -177,27 +176,37 @@ class CreatePaymentView(CreateAPIView):
 @extend_schema(tags=["Payment"])
 class ListPaymentView(ListAPIView):
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializerGetDelete
+    serializer_class = PaymentSerializer
 
 
 @extend_schema(tags=["Payment"])
 class RetrievePaymentView(RetrieveAPIView):
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializerGetDelete
+    serializer_class = PaymentSerializer
 
 
 @extend_schema(tags=["Payment"])
 class UpdatePaymentView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializerPostPatchPut
+    serializer_class = PaymentSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        invalid_fields = [
+            key for key in request.data if key not in self.serializer_class().fields
+        ]
+
+        if invalid_fields:
+            raise ValidationError({"invalid_fields": invalid_fields})
+
+        return super().partial_update(request, *args, **kwargs)
 
 
 @extend_schema(tags=["Payment"])
 class DeletePaymentView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Payment.objects.all()
-    serializer_class = PaymentSerializerGetDelete
+    serializer_class = PaymentSerializer
 
 
 @extend_schema(tags=["Coach"])
