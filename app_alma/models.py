@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class PaymentStatusChoices(models.TextChoices):
@@ -17,7 +18,7 @@ class User(AbstractUser):
 
 class Student(models.Model):
     name = models.CharField(max_length=255)
-    age = models.IntegerField()
+    age = models.IntegerField(validators=[MinValueValidator(0), MaxValueValidator(99)])
     email = models.EmailField()
     phone = models.TextField(max_length=20)
     category = models.CharField(max_length=20)
