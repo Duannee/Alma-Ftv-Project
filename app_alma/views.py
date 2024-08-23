@@ -15,8 +15,7 @@ from .serializers import (
     StudentSerializer,
     StudentProfileSerializer,
     PaymentSerializer,
-    CoachSerializerPostPatchPut,
-    CoachSerializerGetDelete,
+    CoachSerializer,
 )
 from django.shortcuts import get_object_or_404
 from drf_spectacular.utils import extend_schema
@@ -213,30 +212,40 @@ class DeletePaymentView(DestroyAPIView):
 class CreateCoachView(CreateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializerPostPatchPut
+    serializer_class = CoachSerializer
 
 
 @extend_schema(tags=["Coach"])
 class ListCoachView(ListAPIView):
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializerGetDelete
+    serializer_class = CoachSerializer
 
 
 @extend_schema(tags=["Coach"])
 class RetrieveCoachView(RetrieveAPIView):
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializerGetDelete
+    serializer_class = CoachSerializer
 
 
 @extend_schema(tags=["Coach"])
 class UpdateCoachView(UpdateAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializerPostPatchPut
+    serializer_class = CoachSerializer
+
+    def partial_update(self, request, *args, **kwargs):
+        invalid_fields = [
+            key for key in request.data if key not in self.serializer_class().fields
+        ]
+
+        if invalid_fields:
+            raise ValidationError({"invalid_fields": invalid_fields})
+
+        return super().partial_update(request, *args, **kwargs)
 
 
 @extend_schema(tags=["Coach"])
 class DeleteCoachView(DestroyAPIView):
     permission_classes = [IsAuthenticatedOrReadOnly]
     queryset = Coach.objects.all()
-    serializer_class = CoachSerializerGetDelete
+    serializer_class = CoachSerializer

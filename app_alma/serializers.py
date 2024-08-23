@@ -63,13 +63,13 @@ class PaymentSerializer(serializers.ModelSerializer):
         return data
 
 
-class CoachSerializerPostPatchPut(serializers.ModelSerializer):
+class CoachSerializer(serializers.ModelSerializer):
     class Meta:
         model = Coach
         fields = "__all__"
 
-
-class CoachSerializerGetDelete(serializers.ModelSerializer):
-    class Meta:
-        model = Coach
-        fields = "__all__"
+    def validate(self, data):
+        for key in data.keys():
+            if key not in self.fields:
+                raise serializers.ValidationError({key: "This field does not exist."})
+        return data
