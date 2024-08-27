@@ -36,9 +36,14 @@ class StudentSerializer(serializers.ModelSerializer):
         name = attrs.get("name")
         email = attrs.get("email")
 
-        if Student.objects.filter(name=name, email=email).exists():
+        if Student.objects.filter(name=name).exists():
             raise serializers.ValidationError(
-                "There is already a student with that name or email, please choose another one"
+                "There is already a student with that name, please choose another one"
+            )
+
+        if Student.objects.filter(email=email).exists():
+            raise serializers.ValidationError(
+                "There is already a student with that email, please choose another one"
             )
         return attrs
 
@@ -83,3 +88,19 @@ class CoachSerializer(serializers.ModelSerializer):
             if key not in self.fields:
                 raise serializers.ValidationError({key: "This field does not exist."})
         return data
+
+    def validate(self, attrs):
+        name = attrs.get("name")
+        email = attrs.get("email")
+
+        if Coach.objects.filter(name=name).exists():
+            raise serializers.ValidationError(
+                "There is already a coach with that name , please choose another one"
+            )
+
+        if Coach.objects.filter(email=email).exists():
+            raise serializers.ValidationError(
+                "There is already a coach with that email, please choose another one"
+            )
+
+        return attrs
