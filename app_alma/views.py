@@ -136,8 +136,15 @@ class CreateStudentProfileView(CreateAPIView):
 
 @extend_schema(tags=["Student Profile"])
 class ListStudentProfileView(ListAPIView):
-    queryset = StudentProfile.objects.all()
+
     serializer_class = StudentProfileSerializer
+
+    def get_queryset(self):
+        queryset = StudentProfile.objects.all()
+        name = self.request.query_params.get("student")
+        if name is not None:
+            queryset = queryset.filter(student__name__icontains=name)
+        return queryset
 
 
 @extend_schema(tags=["Student Profile"])
