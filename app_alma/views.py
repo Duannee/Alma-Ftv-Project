@@ -243,8 +243,15 @@ class CreateCoachView(CreateAPIView):
 
 @extend_schema(tags=["Coach"])
 class ListCoachView(ListAPIView):
-    queryset = Coach.objects.all()
     serializer_class = CoachSerializer
+
+    def get_queryset(self):
+        queryset = Coach.objects.all()
+        name = self.request.query_params.get("name")
+        if name is not None:
+            queryset = queryset.filter(name__icontains=name)
+
+        return queryset
 
 
 @extend_schema(tags=["Coach"])
