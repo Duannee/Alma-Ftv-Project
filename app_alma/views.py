@@ -141,9 +141,9 @@ class ListStudentProfileView(ListAPIView):
 
     def get_queryset(self):
         queryset = StudentProfile.objects.all()
-        name = self.request.query_params.get("student")
-        if name is not None:
-            queryset = queryset.filter(student__name__icontains=name)
+        student = self.request.query_params.get("student")
+        if student is not None:
+            queryset = queryset.filter(student__name__icontains=student)
         return queryset
 
 
@@ -194,8 +194,14 @@ class CreatePaymentView(CreateAPIView):
 
 @extend_schema(tags=["Payment"])
 class ListPaymentView(ListAPIView):
-    queryset = Payment.objects.all()
     serializer_class = PaymentSerializer
+
+    def get_queryset(self):
+        queryset = Payment.objects.all()
+        student = self.request.query_params.get("student")
+        if student is not None:
+            queryset = queryset.filter(student__name__icontains=student)
+        return queryset
 
 
 @extend_schema(tags=["Payment"])
