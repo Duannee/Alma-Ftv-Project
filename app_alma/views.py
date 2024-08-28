@@ -29,8 +29,14 @@ class CreateAccountView(CreateAPIView):
 
 @extend_schema(tags=["User"])
 class ListAccountView(ListAPIView):
-    queryset = User.objects.all()
     serializer_class = UserSerializer
+
+    def get_queryset(self):
+        queryset = User.objects.all()
+        username = self.request.query_params.get("username")
+        if username is not None:
+            queryset = queryset.filter(username__icontains=username)
+        return queryset
 
 
 @extend_schema(tags=["User"])
