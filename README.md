@@ -7,7 +7,7 @@
 The Alma-Ftv API is a tool that helps training center owners organize and control their business activities simply and efficiently. With it, you can manage student information, track payments and administer the coaches working at the center.
 
 ## Base URL
-The base URL to access the API is: [Api Alma Ftv](https://alma-ftv-project.onrender.com/api/)
+The base URL to access the API is: [Api Alma Ftv](https://alma-ftv-project.onrender.com/api/user/create)
 
 ## Features
 - **Accounts**: Full CRUD operations for user accounts.
