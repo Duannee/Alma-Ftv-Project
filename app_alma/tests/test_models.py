@@ -90,3 +90,20 @@ class ModelPaymentTestCase(TestCase):
         """Test for verify if payment will be delete when student will be delete"""
         self.student.delete()
         self.assertFalse(Payment.objects.filter(pk=self.student.id).exists())
+
+
+class ModelCoachTestCase(TestCase):
+    def setUp(self):
+        self.coach = Coach.objects.create(
+            name="test coach",
+            specialty="test specialty",
+            email="testemailcoach@mail.com",
+            phone="21 99999-9999",
+        )
+
+    def test_verify_coach_attributes(self):
+        """Test for verify PAYMENT attributes"""
+        self.assertEqual(self.coach.name, "test coach")
+        self.assertEqual(self.coach.specialty, "test specialty")
+        self.assertEqual(self.coach.email, "testemailcoach@mail.com")
+        self.assertEqual(self.coach.phone, "21 99999-9999")
