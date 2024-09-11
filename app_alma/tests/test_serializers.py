@@ -126,3 +126,29 @@ class SerializerPaymentTestCase(TestCase):
         self.assertEqual(data["pay_day"], self.payment.pay_day)
         self.assertEqual(data["value"], self.payment.value)
         self.assertEqual(data["status"], self.payment.status)
+
+
+class SerializerCoachTestCase(TestCase):
+    def setUp(self):
+        self.coach = Coach(
+            name="test coach",
+            specialty="test specialty",
+            email="testemailcoach@mail.com",
+            phone="21 99999-9999",
+        )
+        self.coach_serializer = CoachSerializer(instance=self.coach)
+
+    def test_verify_Coach_fields_serialized(self):
+        """Test to verify if Coach fields are serialized"""
+        data = self.coach_serializer.data
+        self.assertEqual(
+            set(data.keys()), set(["id", "name", "specialty", "email", "phone"])
+        )
+
+    def test_verify_content_Coach_fields_serializer(self):
+        """Test to verify the content into the fields Coach serializer"""
+        data = self.coach_serializer.data
+        self.assertEqual(data["name"], self.coach.name)
+        self.assertEqual(data["specialty"], self.coach.specialty)
+        self.assertEqual(data["email"], self.coach.email)
+        self.assertEqual(data["phone"], self.coach.phone)
