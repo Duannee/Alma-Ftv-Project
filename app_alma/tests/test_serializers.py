@@ -55,3 +55,40 @@ class SerializerStudentTestCase(TestCase):
         self.assertEqual(data["email"], self.student.email)
         self.assertEqual(data["phone"], self.student.phone)
         self.assertEqual(data["category"], self.student.category)
+
+
+class SerializerStudentProfileTestCase(TestCase):
+    def setUp(self):
+        self.student = Student(
+            name="Student test",
+            age=26,
+            email="studentest@mail.com",
+            phone="21 99999-9999",
+            category="test category",
+        )
+        self.student_profile = StudentProfile(
+            student=self.student,
+            goal="test goal",
+            progress="test progress",
+            feedback="test feedback",
+        )
+        self.student_profile_serializer = StudentProfileSerializer(
+            instance=self.student_profile
+        )
+
+    def test_verify_Student_Profile_fields_serialized(self):
+        """Test to verify if Student Profile fields are serialized"""
+        data = self.student_profile_serializer.data
+        self.assertEqual(
+            set(data.keys()), set(["id", "student", "goal", "progress", "feedback"])
+        )
+
+    def test_verify_content_Student_Profile_fields_serializer(self):
+        """Test to verify the content into the fields Student Profile serializer"""
+        data = self.student_profile_serializer.data
+        serialized_student = StudentSerializer(self.student_profile.student).data
+
+        self.assertEqual(data["student"], serialized_student)
+        self.assertEqual(data["goal"], self.student_profile.goal)
+        self.assertEqual(data["progress"], self.student_profile.progress)
+        self.assertEqual(data["feedback"], self.student_profile.feedback)
