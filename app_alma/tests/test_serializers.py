@@ -92,3 +92,37 @@ class SerializerStudentProfileTestCase(TestCase):
         self.assertEqual(data["goal"], self.student_profile.goal)
         self.assertEqual(data["progress"], self.student_profile.progress)
         self.assertEqual(data["feedback"], self.student_profile.feedback)
+
+
+class SerializerPaymentTestCase(TestCase):
+    def setUp(self):
+        self.student = Student(
+            name="Student test",
+            age="26",
+            email="studentest@mail.com",
+            phone="21 99999-9999",
+            category="test category",
+        )
+        self.payment = Payment(
+            student=self.student,
+            pay_day="2024-09-09",
+            value="290.00",
+            status="test status",
+        )
+        self.payment_serializer = PaymentSerializer(instance=self.payment)
+
+    def test_verify_Payment_fields_serialized(self):
+        """Test to verify if Payment fields are serialized"""
+        data = self.payment_serializer.data
+        self.assertEqual(
+            set(data.keys()), set(["id", "student", "pay_day", "value", "status"])
+        )
+
+    def test_verify_content_Payment_fields_serializer(self):
+        """Test to verify the content into the fields Payment serializer"""
+        data = self.payment_serializer.data
+        serialized_student = StudentSerializer(self.payment.student).data
+        self.assertEqual(data["student"], serialized_student)
+        self.assertEqual(data["pay_day"], self.payment.pay_day)
+        self.assertEqual(data["value"], self.payment.value)
+        self.assertEqual(data["status"], self.payment.status)
