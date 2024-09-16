@@ -11,3 +11,8 @@ class AuthenticationUserTestCase(APITestCase):
         """Test to verify if User credentials are correct"""
         user = authenticate(username="admin", password="admin")
         self.assertTrue((user is not None) and user.is_authenticated)
+
+    def test_USER_authentication_with_incorrect_username(self):
+        """Test to verify the authentication a incorrect username"""
+        user = authenticate(username="adm", password="admin")
+        self.assertFalse((user is not None) and user.is_authenticated)
