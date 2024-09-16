@@ -33,13 +33,22 @@ urlpatterns = [
     path("token/", views.TokenObtainPairView.as_view()),
     path("token/refresh/", views.TokenRefreshView.as_view()),
     # User routes
-    path("user/create/", CreateAccountView.as_view()),
+    path(
+        "user/create/",
+        CreateAccountView.as_view(),
+    ),
     path("user/list/", ListAccountView.as_view()),
     path("user/<int:pk>/retrieve/", RetrieveAccountView.as_view()),
-    path("user/<int:pk>/update/", UpdateAccountView.as_view()),
-    path("user/<int:pk>/delete/", DeleteAccountView.as_view()),
+    path(
+        "user/<int:pk>/update/",
+        UpdateAccountView.as_view(),
+    ),
+    path(
+        "user/<int:pk>/delete/",
+        DeleteAccountView.as_view(),
+    ),
     # Students routes
-    path("student/create/", CreateStudentView.as_view()),
+    path("student/create/", CreateStudentView.as_view(), name="student-post"),
     path("student/list/", ListStudentView.as_view()),
     path("student/<int:pk>/retrieve/", RetrieveStudentView.as_view()),
     path("student/<int:pk>/update/", UpdateStudentView.as_view()),
