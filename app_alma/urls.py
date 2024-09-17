@@ -59,7 +59,9 @@ urlpatterns = [
     ),
     # Student profile routes
     path(
-        "student/<int:student_id>/profile/create/", CreateStudentProfileView.as_view()
+        "student/<int:student_id>/profile/create/",
+        CreateStudentProfileView.as_view(),
+        name="student-profile-post",
     ),
     path("student_profile/list/", ListStudentProfileView.as_view()),
     path(
@@ -69,6 +71,7 @@ urlpatterns = [
     path(
         "student_profile/<int:pk>/update/",
         UpdateStudentProfileView.as_view(),
+        # name="student-profile-patch",
     ),
     path(
         "student_profile/<int:pk>/delete/",
