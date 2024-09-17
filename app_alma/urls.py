@@ -54,7 +54,9 @@ urlpatterns = [
     path(
         "student/<int:pk>/update/", UpdateStudentView.as_view(), name="student-update"
     ),
-    path("student/<int:pk>/delete/", DeleteStudentView.as_view()),
+    path(
+        "student/<int:pk>/delete/", DeleteStudentView.as_view(), name="student-delete"
+    ),
     # Student profile routes
     path(
         "student/<int:student_id>/profile/create/", CreateStudentProfileView.as_view()
