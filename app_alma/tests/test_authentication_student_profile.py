@@ -34,25 +34,25 @@ class AuthenticationStudentProfileTestCase(APITestCase):
         self.assertEqual(student_profile.progress, "new test progress")
         self.assertEqual(student_profile.feedback, "new test feedback")
 
-    # def test_PATCH_request_with_authentication(self):
-    #     """Test to verify if Student Profile PATCH request with authentication was authorized"""
-    #     self.student_profile = StudentProfile.objects.create(
-    #         student=self.student,
-    #         goal="test goal",
-    #         progress="test progress",
-    #         feedback="test feedback",
-    #     )
-    #     self.url = reverse(
-    #         "student-profile-patch", kwargs={"pk": self.student_profile.pk}
-    #     )
-    #     self.data = {
-    #         "goal": "new test goal",
-    #         "progress": "new test progress",
-    #         "feedback": "new test feedback",
-    #     }
-    #     response = self.client.patch(self.url, self.data, format="json")
-    #     self.assertEqual(response.status_code, status.HTTP_200_OK)
-    #     self.student_profile.refresh_from_db()
-    #     self.assertEqual(self.student_profile.goal, "new test goal")
-    #     self.assertEqual(self.student_profile.progress, "new test progress")
-    #     self.assertEqual(self.student_profile.feedback, "new test feedback")
+    def test_PATCH_request_with_authentication(self):
+        """Test to verify if Student Profile PATCH request with authentication was authorized"""
+        self.student_profile = StudentProfile.objects.create(
+            student=self.student,
+            goal="test goal",
+            progress="test progress",
+            feedback="test feedback",
+        )
+        self.url = reverse(
+            "student-profile-patch", kwargs={"pk": self.student_profile.pk}
+        )
+        self.data = {
+            "goal": "new test goal",
+            "progress": "new test progress",
+            "feedback": "new test feedback",
+        }
+        response = self.client.patch(self.url, self.data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.student_profile.refresh_from_db()
+        self.assertEqual(self.student_profile.goal, "new test goal")
+        self.assertEqual(self.student_profile.progress, "new test progress")
+        self.assertEqual(self.student_profile.feedback, "new test feedback")

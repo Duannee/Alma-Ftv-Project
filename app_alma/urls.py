@@ -71,7 +71,7 @@ urlpatterns = [
     path(
         "student_profile/<int:pk>/update/",
         UpdateStudentProfileView.as_view(),
-        # name="student-profile-patch",
+        name="student-profile-patch",
     ),
     path(
         "student_profile/<int:pk>/delete/",
