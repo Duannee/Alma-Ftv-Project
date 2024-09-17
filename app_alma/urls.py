@@ -33,20 +33,35 @@ urlpatterns = [
     path("token/", views.TokenObtainPairView.as_view()),
     path("token/refresh/", views.TokenRefreshView.as_view()),
     # User routes
-    path("user/create/", CreateAccountView.as_view()),
+    path(
+        "user/create/",
+        CreateAccountView.as_view(),
+    ),
     path("user/list/", ListAccountView.as_view()),
     path("user/<int:pk>/retrieve/", RetrieveAccountView.as_view()),
-    path("user/<int:pk>/update/", UpdateAccountView.as_view()),
-    path("user/<int:pk>/delete/", DeleteAccountView.as_view()),
+    path(
+        "user/<int:pk>/update/",
+        UpdateAccountView.as_view(),
+    ),
+    path(
+        "user/<int:pk>/delete/",
+        DeleteAccountView.as_view(),
+    ),
     # Students routes
-    path("student/create/", CreateStudentView.as_view()),
+    path("student/create/", CreateStudentView.as_view(), name="student-post"),
     path("student/list/", ListStudentView.as_view()),
     path("student/<int:pk>/retrieve/", RetrieveStudentView.as_view()),
-    path("student/<int:pk>/update/", UpdateStudentView.as_view()),
-    path("student/<int:pk>/delete/", DeleteStudentView.as_view()),
+    path(
+        "student/<int:pk>/update/", UpdateStudentView.as_view(), name="student-update"
+    ),
+    path(
+        "student/<int:pk>/delete/", DeleteStudentView.as_view(), name="student-delete"
+    ),
     # Student profile routes
     path(
-        "student/<int:student_id>/profile/create/", CreateStudentProfileView.as_view()
+        "student/<int:student_id>/profile/create/",
+        CreateStudentProfileView.as_view(),
+        name="student-profile-post",
     ),
     path("student_profile/list/", ListStudentProfileView.as_view()),
     path(
@@ -56,10 +71,12 @@ urlpatterns = [
     path(
         "student_profile/<int:pk>/update/",
         UpdateStudentProfileView.as_view(),
+        name="student-profile-patch",
     ),
     path(
         "student_profile/<int:pk>/delete/",
         DeleteStudentProfileView.as_view(),
+        name="student-profile-delete",
     ),
     # Payment routes
     path("payment/<int:student_id>/student/create/", CreatePaymentView.as_view()),
