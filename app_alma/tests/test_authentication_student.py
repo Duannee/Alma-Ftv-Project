@@ -53,7 +53,7 @@ class AuthenticationStudentTestCase(APITestCase):
             category="test",
         )
         self.url = reverse("student-delete", kwargs={"pk": self.student.pk})
-        response = self.client.delete(self.url, format="json")
+        response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
         with self.assertRaises(Student.DoesNotExist):
             self.student.refresh_from_db()

@@ -56,3 +56,23 @@ class AuthenticationStudentProfileTestCase(APITestCase):
         self.assertEqual(self.student_profile.goal, "new test goal")
         self.assertEqual(self.student_profile.progress, "new test progress")
         self.assertEqual(self.student_profile.feedback, "new test feedback")
+
+    def test_DELETE_request_with_authentication(self):
+        """Test to verify if Student Profile DELETE request with authentication was authorized"""
+        self.student_profile = StudentProfile.objects.create(
+            student=self.student,
+            goal="test goal",
+            progress="test progress",
+            feedback="test feedback",
+        )
+        self.url = reverse(
+            "student-profile-delete", kwargs={"pk": self.student_profile.pk}
+        )
+        self.assertTrue(
+            StudentProfile.objects.filter(pk=self.student_profile.pk).exists()
+        )
+
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(StudentProfile.DoesNotExist):
+            StudentProfile.objects.get(pk=self.student_profile.pk)

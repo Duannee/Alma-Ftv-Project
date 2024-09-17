@@ -76,6 +76,7 @@ urlpatterns = [
     path(
         "student_profile/<int:pk>/delete/",
         DeleteStudentProfileView.as_view(),
+        name="student-profile-delete",
     ),
     # Payment routes
     path("payment/<int:student_id>/student/create/", CreatePaymentView.as_view()),
