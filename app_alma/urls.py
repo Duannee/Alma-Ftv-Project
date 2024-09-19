@@ -91,9 +91,9 @@ urlpatterns = [
         "payment/<int:pk>/delete/", DeletePaymentView.as_view(), name="payment-delete"
     ),
     # Coach routes
-    path("coach/create/", CreateCoachView.as_view()),
+    path("coach/create/", CreateCoachView.as_view(), name="coach-post"),
     path("coach/list/", ListCoachView.as_view()),
     path("coach/<int:pk>/retrieve/", RetrieveCoachView.as_view()),
-    path("coach/<int:pk>/update/", UpdateCoachView.as_view()),
+    path("coach/<int:pk>/update/", UpdateCoachView.as_view(), name="coach-update"),
     path("coach/<int:pk>/delete/", DeleteCoachView.as_view()),
 ]
