@@ -79,7 +79,11 @@ urlpatterns = [
         name="student-profile-delete",
     ),
     # Payment routes
-    path("payment/<int:student_id>/student/create/", CreatePaymentView.as_view()),
+    path(
+        "payment/<int:student_id>/student/create/",
+        CreatePaymentView.as_view(),
+        name="payment-post",
+    ),
     path("payment/list/", ListPaymentView.as_view()),
     path("payment/<int:pk>/retrieve/", RetrievePaymentView.as_view()),
     path("payment/<int:pk>/update/", UpdatePaymentView.as_view()),
