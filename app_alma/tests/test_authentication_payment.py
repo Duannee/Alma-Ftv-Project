@@ -16,10 +16,10 @@ class AuthenticationPaymentTestCase(APITestCase):
             phone="99 99999-9999",
             category="test",
         )
+        self.client.force_authenticate(self.user)
 
     def test_POST_request_with_authentication(self):
         """Test to verify if Payment POST request with authentication was authorized"""
-        self.client.force_authenticate(self.user)
         self.url = reverse("payment-post", kwargs={"student_id": self.student.pk})
         self.data = {
             "student": self.student.id,
@@ -34,3 +34,25 @@ class AuthenticationPaymentTestCase(APITestCase):
         self.assertEqual(payment.pay_day, expected_date)
         self.assertEqual(payment.value, Decimal("999.99"))
         self.assertEqual(payment.status, "Pending")
+
+    def test_PATCH_request_with_authentication(self):
+        """Test to verify if Payment PATCH request with authentication was authorized"""
+        self.payment = Payment.objects.create(
+            student=self.student,
+            pay_day="1980-10-10",
+            value=999.99,
+            status="Pending",
+        )
+        self.url = reverse("payment-patch", kwargs={"pk": self.payment.pk})
+        self.data = {
+            "pay_day": "1980-10-10",
+            "value": 999.99,
+            "status": "Pending",
+        }
+        response = self.client.patch(self.url, self.data, format="json")
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.payment.refresh_from_db()
+        expected_date = datetime.strptime("1980-10-10", "%Y-%m-%d").date()
+        self.assertEqual(self.payment.pay_day, expected_date)
+        self.assertEqual(self.payment.value, Decimal("999.99"))
+        self.assertEqual(self.payment.status, "Pending")
