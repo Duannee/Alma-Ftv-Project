@@ -87,7 +87,9 @@ urlpatterns = [
     path("payment/list/", ListPaymentView.as_view()),
     path("payment/<int:pk>/retrieve/", RetrievePaymentView.as_view()),
     path("payment/<int:pk>/update/", UpdatePaymentView.as_view(), name="payment-patch"),
-    path("payment/<int:pk>/delete/", DeletePaymentView.as_view()),
+    path(
+        "payment/<int:pk>/delete/", DeletePaymentView.as_view(), name="payment-delete"
+    ),
     # Coach routes
     path("coach/create/", CreateCoachView.as_view()),
     path("coach/list/", ListCoachView.as_view()),

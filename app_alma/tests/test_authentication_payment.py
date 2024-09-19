@@ -56,3 +56,18 @@ class AuthenticationPaymentTestCase(APITestCase):
         self.assertEqual(self.payment.pay_day, expected_date)
         self.assertEqual(self.payment.value, Decimal("999.99"))
         self.assertEqual(self.payment.status, "Pending")
+
+    def test_DELETE_request_with_authentication(self):
+        """Test to verify if Payment DELETE request with authentication was authorized"""
+        self.payment = Payment.objects.create(
+            student=self.student,
+            pay_day="1980-10-10",
+            value=999.99,
+            status="Pending",
+        )
+        self.url = reverse("payment-delete", kwargs={"pk": self.payment.pk})
+        self.assertTrue(Payment.objects.filter(pk=self.payment.pk).exists())
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(Payment.DoesNotExist):
+            Payment.objects.get(pk=self.payment.pk)
