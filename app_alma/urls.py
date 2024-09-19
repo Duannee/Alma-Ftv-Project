@@ -79,15 +79,21 @@ urlpatterns = [
         name="student-profile-delete",
     ),
     # Payment routes
-    path("payment/<int:student_id>/student/create/", CreatePaymentView.as_view()),
+    path(
+        "payment/<int:student_id>/student/create/",
+        CreatePaymentView.as_view(),
+        name="payment-post",
+    ),
     path("payment/list/", ListPaymentView.as_view()),
     path("payment/<int:pk>/retrieve/", RetrievePaymentView.as_view()),
-    path("payment/<int:pk>/update/", UpdatePaymentView.as_view()),
-    path("payment/<int:pk>/delete/", DeletePaymentView.as_view()),
+    path("payment/<int:pk>/update/", UpdatePaymentView.as_view(), name="payment-patch"),
+    path(
+        "payment/<int:pk>/delete/", DeletePaymentView.as_view(), name="payment-delete"
+    ),
     # Coach routes
-    path("coach/create/", CreateCoachView.as_view()),
+    path("coach/create/", CreateCoachView.as_view(), name="coach-post"),
     path("coach/list/", ListCoachView.as_view()),
     path("coach/<int:pk>/retrieve/", RetrieveCoachView.as_view()),
-    path("coach/<int:pk>/update/", UpdateCoachView.as_view()),
-    path("coach/<int:pk>/delete/", DeleteCoachView.as_view()),
+    path("coach/<int:pk>/update/", UpdateCoachView.as_view(), name="coach-update"),
+    path("coach/<int:pk>/delete/", DeleteCoachView.as_view(), name="coach-delete"),
 ]
