@@ -95,5 +95,5 @@ urlpatterns = [
     path("coach/list/", ListCoachView.as_view()),
     path("coach/<int:pk>/retrieve/", RetrieveCoachView.as_view()),
     path("coach/<int:pk>/update/", UpdateCoachView.as_view(), name="coach-update"),
-    path("coach/<int:pk>/delete/", DeleteCoachView.as_view()),
+    path("coach/<int:pk>/delete/", DeleteCoachView.as_view(), name="coach-delete"),
 ]

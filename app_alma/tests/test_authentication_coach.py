@@ -40,3 +40,18 @@ class AuthenticationCoachTestCase(APITestCase):
         self.coach.refresh_from_db()
         self.assertEqual(self.coach.name, "test name")
         self.assertEqual(self.coach.specialty, "test specialty")
+
+    def test_DELETE_request_with_authentication(self):
+        """Test to verify if Coach DELETE request with authentication was authorized"""
+        self.coach = Coach.objects.create(
+            name="test",
+            specialty="test specialty",
+            email="test@mail.com",
+            phone="99 99999-9999",
+        )
+        self.url = reverse("coach-delete", kwargs={"pk": self.coach.pk})
+        self.assertTrue(Coach.objects.filter(pk=self.coach.pk).exists())
+        response = self.client.delete(self.url)
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        with self.assertRaises(Coach.DoesNotExist):
+            self.coach.refresh_from_db()
