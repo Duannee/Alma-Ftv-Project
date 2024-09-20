@@ -49,8 +49,12 @@ urlpatterns = [
     ),
     # Students routes
     path("student/create/", CreateStudentView.as_view(), name="student-post"),
-    path("student/list/", ListStudentView.as_view()),
-    path("student/<int:pk>/retrieve/", RetrieveStudentView.as_view()),
+    path("student/list/", ListStudentView.as_view(), name="student-list"),
+    path(
+        "student/<int:pk>/retrieve/",
+        RetrieveStudentView.as_view(),
+        name="student-id-list",
+    ),
     path(
         "student/<int:pk>/update/", UpdateStudentView.as_view(), name="student-update"
     ),

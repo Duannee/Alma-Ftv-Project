@@ -1,4 +1,4 @@
-from app_alma.models import User, Coach
+from app_alma.models import User
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APITestCase
