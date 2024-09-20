@@ -38,7 +38,7 @@ urlpatterns = [
         CreateAccountView.as_view(),
     ),
     path("user/list/", ListAccountView.as_view(), name="user-list"),
-    path("user/<int:pk>/retrieve/", RetrieveAccountView.as_view()),
+    path("user/<int:pk>/retrieve/", RetrieveAccountView.as_view(), name="user-id-list"),
     path(
         "user/<int:pk>/update/",
         UpdateAccountView.as_view(),
