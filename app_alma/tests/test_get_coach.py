@@ -19,3 +19,9 @@ class GetCoachTestCase(APITestCase):
         self.url = reverse("coach-list")
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_COACH_GET_ID_request(self):
+        """Get ID request test for Coach"""
+        self.url = reverse("coach-id-list", kwargs={"pk": self.coach.pk})
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
