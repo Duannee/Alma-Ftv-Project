@@ -20,3 +20,9 @@ class GetStudentTestCase(APITestCase):
         self.url = reverse("student-list")
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_USER_GET_ID_request(self):
+        """Get ID request test for Student"""
+        self.url = reverse("student-id-list", kwargs={"pk": self.student.pk})
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
