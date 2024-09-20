@@ -67,10 +67,15 @@ urlpatterns = [
         CreateStudentProfileView.as_view(),
         name="student-profile-post",
     ),
-    path("student_profile/list/", ListStudentProfileView.as_view()),
+    path(
+        "student_profile/list/",
+        ListStudentProfileView.as_view(),
+        name="student-profile-list",
+    ),
     path(
         "student_profile/<int:pk>/retrieve/",
         RetrieveStudentProfileView.as_view(),
+        name="student-profile-id-list",
     ),
     path(
         "student_profile/<int:pk>/update/",
