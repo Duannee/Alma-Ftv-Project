@@ -21,13 +21,13 @@ class GetStudentProfileTestCase(APITestCase):
             feedback="test feedback",
         )
 
-    def test_USER_GET_request(self):
+    def test_STUDENT_PROFILE_GET_request(self):
         """Get request test for Student Profile"""
         self.url = reverse("student-profile-list")
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_USER_GET_ID_request(self):
+    def test_STUDENT_PROFILE_GET_ID_request(self):
         """Get ID request test for Student Profile"""
         self.url = reverse(
             "student-profile-id-list", kwargs={"pk": self.student_profile.pk}
