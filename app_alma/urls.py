@@ -37,8 +37,8 @@ urlpatterns = [
         "user/create/",
         CreateAccountView.as_view(),
     ),
-    path("user/list/", ListAccountView.as_view()),
-    path("user/<int:pk>/retrieve/", RetrieveAccountView.as_view()),
+    path("user/list/", ListAccountView.as_view(), name="user-list"),
+    path("user/<int:pk>/retrieve/", RetrieveAccountView.as_view(), name="user-id-list"),
     path(
         "user/<int:pk>/update/",
         UpdateAccountView.as_view(),
@@ -49,8 +49,12 @@ urlpatterns = [
     ),
     # Students routes
     path("student/create/", CreateStudentView.as_view(), name="student-post"),
-    path("student/list/", ListStudentView.as_view()),
-    path("student/<int:pk>/retrieve/", RetrieveStudentView.as_view()),
+    path("student/list/", ListStudentView.as_view(), name="student-list"),
+    path(
+        "student/<int:pk>/retrieve/",
+        RetrieveStudentView.as_view(),
+        name="student-id-list",
+    ),
     path(
         "student/<int:pk>/update/", UpdateStudentView.as_view(), name="student-update"
     ),
@@ -63,10 +67,15 @@ urlpatterns = [
         CreateStudentProfileView.as_view(),
         name="student-profile-post",
     ),
-    path("student_profile/list/", ListStudentProfileView.as_view()),
+    path(
+        "student_profile/list/",
+        ListStudentProfileView.as_view(),
+        name="student-profile-list",
+    ),
     path(
         "student_profile/<int:pk>/retrieve/",
         RetrieveStudentProfileView.as_view(),
+        name="student-profile-id-list",
     ),
     path(
         "student_profile/<int:pk>/update/",
@@ -84,16 +93,20 @@ urlpatterns = [
         CreatePaymentView.as_view(),
         name="payment-post",
     ),
-    path("payment/list/", ListPaymentView.as_view()),
-    path("payment/<int:pk>/retrieve/", RetrievePaymentView.as_view()),
+    path("payment/list/", ListPaymentView.as_view(), name="payment-list"),
+    path(
+        "payment/<int:pk>/retrieve/",
+        RetrievePaymentView.as_view(),
+        name="payment-id-list",
+    ),
     path("payment/<int:pk>/update/", UpdatePaymentView.as_view(), name="payment-patch"),
     path(
         "payment/<int:pk>/delete/", DeletePaymentView.as_view(), name="payment-delete"
     ),
     # Coach routes
     path("coach/create/", CreateCoachView.as_view(), name="coach-post"),
-    path("coach/list/", ListCoachView.as_view()),
-    path("coach/<int:pk>/retrieve/", RetrieveCoachView.as_view()),
+    path("coach/list/", ListCoachView.as_view(), name="coach-list"),
+    path("coach/<int:pk>/retrieve/", RetrieveCoachView.as_view(), name="coach-id-list"),
     path("coach/<int:pk>/update/", UpdateCoachView.as_view(), name="coach-update"),
     path("coach/<int:pk>/delete/", DeleteCoachView.as_view(), name="coach-delete"),
 ]
