@@ -26,3 +26,9 @@ class GetStudentProfileTestCase(APITestCase):
         self.url = reverse("payment-list")
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_PAYMENT_GET_ID_request(self):
+        """Get ID request test for Payment"""
+        self.url = reverse("payment-id-list", kwargs={"pk": self.payment.pk})
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
