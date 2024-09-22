@@ -5,14 +5,11 @@ from rest_framework.test import APITestCase
 
 
 class GetCoachTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
-        self.coach = Coach.objects.create(
-            name="test",
-            email="test@mail.com",
-            phone="99 99999-9999",
-            specialty="test specialty",
-        )
+        self.user = User.objects.get(pk=2)
+        self.coach = Coach.objects.get(pk=2)
 
     def test_COACH_GET_request(self):
         """Get request test for Coach"""
