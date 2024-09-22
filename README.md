@@ -49,6 +49,21 @@ Start the server:
 ```bash
 python manage.py runserver
 ```
+## Running Tests
+
+This project includes a suite of unit and integration tests to ensure the API functions correctly.
+
+### How to Run Tests
+
+1. Ensure you have all the dependencies installed and the virtual environment activated.
+2. Run the following command to execute the tests:
+
+```bash
+python manage.py test
+```
+## Test Structure
+- Unit Tests: These tests cover individual units of functionality within the API.
+- Integration Tests: These tests ensure that various parts of the system work together as expected.
 
 ## Authentication
 This API uses authentication for POST, PATCH, PUT, and DELETE methods. To access these features, you need to include an authentication token in the request headers.
