@@ -5,21 +5,12 @@ from rest_framework.test import APITestCase
 
 
 class GetStudentProfileTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
-        self.student = Student.objects.create(
-            name="test",
-            age=21,
-            email="test@mail.com",
-            phone="99 99999-9999",
-            category="test category",
-        )
-        self.payment = Payment.objects.create(
-            student=self.student,
-            pay_day="2000-10-20",
-            value=300.00,
-            status="Pending",
-        )
+        self.user = User.objects.get(pk=2)
+        self.student = Student.objects.get(pk=4)
+        self.payment = Payment.objects.get(pk=5)
 
     def test_PAYMENT_GET_request(self):
         """Get request test for Payment"""
