@@ -5,15 +5,11 @@ from rest_framework.test import APITestCase
 
 
 class AuthenticationStudentProfileTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
-        self.student = Student.objects.create(
-            name="test",
-            age=21,
-            email="test@mail.com",
-            phone="99 99999-9999",
-            category="test",
-        )
+        self.user = User.objects.get(pk=2)
+        self.student = Student.objects.get(pk=4)
         self.client.force_authenticate(self.user)
 
     def test_POST_request_with_authentication(self):
@@ -36,12 +32,8 @@ class AuthenticationStudentProfileTestCase(APITestCase):
 
     def test_PATCH_request_with_authentication(self):
         """Test to verify if Student Profile PATCH request with authentication was authorized"""
-        self.student_profile = StudentProfile.objects.create(
-            student=self.student,
-            goal="test goal",
-            progress="test progress",
-            feedback="test feedback",
-        )
+        self.student_profile = StudentProfile.objects.get(pk=4)
+
         self.url = reverse(
             "student-profile-patch", kwargs={"pk": self.student_profile.pk}
         )
@@ -59,12 +51,8 @@ class AuthenticationStudentProfileTestCase(APITestCase):
 
     def test_DELETE_request_with_authentication(self):
         """Test to verify if Student Profile DELETE request with authentication was authorized"""
-        self.student_profile = StudentProfile.objects.create(
-            student=self.student,
-            goal="test goal",
-            progress="test progress",
-            feedback="test feedback",
-        )
+        self.student_profile = StudentProfile.objects.get(pk=4)
+
         self.url = reverse(
             "student-profile-delete", kwargs={"pk": self.student_profile.pk}
         )
