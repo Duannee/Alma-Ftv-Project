@@ -5,8 +5,10 @@ from rest_framework.test import APITestCase
 
 
 class AuthenticationStudentTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
+        self.user = User.objects.get(pk=2)
         self.client.force_authenticate(self.user)
 
     def test_POST_request_with_authentication(self):
@@ -24,13 +26,7 @@ class AuthenticationStudentTestCase(APITestCase):
 
     def test_PATCH_request_with_authentication(self):
         """Test to verify if Student PATCH request with authentication was authorized"""
-        self.student = Student.objects.create(
-            name="test",
-            age=21,
-            email="test@mail.com",
-            phone="99 99999-9999",
-            category="test",
-        )
+        self.student = Student.objects.get(pk=4)
 
         self.url = reverse("student-update", kwargs={"pk": self.student.pk})
         self.data = {
@@ -45,13 +41,7 @@ class AuthenticationStudentTestCase(APITestCase):
 
     def test_DELETE_request_with_authentication(self):
         """Test to verify if Student DELETE request with authentication was authorized"""
-        self.student = Student.objects.create(
-            name="test",
-            age=21,
-            email="test@mail.com",
-            phone="99 99999-9999",
-            category="test",
-        )
+        self.student = Student.objects.get(pk=4)
         self.url = reverse("student-delete", kwargs={"pk": self.student.pk})
         response = self.client.delete(self.url)
         self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
