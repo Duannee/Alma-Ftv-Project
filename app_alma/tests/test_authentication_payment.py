@@ -7,15 +7,11 @@ from decimal import Decimal
 
 
 class AuthenticationPaymentTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
-        self.student = Student.objects.create(
-            name="test",
-            age=21,
-            email="test@mail.com",
-            phone="99 99999-9999",
-            category="test",
-        )
+        self.user = User.objects.get(pk=2)
+        self.student = Student.objects.get(pk=4)
         self.client.force_authenticate(self.user)
 
     def test_POST_request_with_authentication(self):
@@ -37,12 +33,7 @@ class AuthenticationPaymentTestCase(APITestCase):
 
     def test_PATCH_request_with_authentication(self):
         """Test to verify if Payment PATCH request with authentication was authorized"""
-        self.payment = Payment.objects.create(
-            student=self.student,
-            pay_day="1980-10-10",
-            value=999.99,
-            status="Pending",
-        )
+        self.payment = Payment.objects.get(pk=5)
         self.url = reverse("payment-patch", kwargs={"pk": self.payment.pk})
         self.data = {
             "pay_day": "1980-10-10",
@@ -59,12 +50,7 @@ class AuthenticationPaymentTestCase(APITestCase):
 
     def test_DELETE_request_with_authentication(self):
         """Test to verify if Payment DELETE request with authentication was authorized"""
-        self.payment = Payment.objects.create(
-            student=self.student,
-            pay_day="1980-10-10",
-            value=999.99,
-            status="Pending",
-        )
+        self.payment = Payment.objects.get(pk=5)
         self.url = reverse("payment-delete", kwargs={"pk": self.payment.pk})
         self.assertTrue(Payment.objects.filter(pk=self.payment.pk).exists())
         response = self.client.delete(self.url)
