@@ -5,8 +5,10 @@ from rest_framework.test import APITestCase
 
 
 class GetUserTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
+        self.user = User.objects.get(pk=2)
 
     def test_USER_GET_request(self):
         """Get request test for User"""

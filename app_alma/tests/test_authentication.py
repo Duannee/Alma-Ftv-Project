@@ -4,6 +4,7 @@ from django.contrib.auth import authenticate
 
 
 class AuthenticationUserTestCase(APITestCase):
+
     def setUp(self):
         self.user = User.objects.create_superuser(username="admin", password="admin")
 

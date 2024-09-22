@@ -5,8 +5,10 @@ from rest_framework.test import APITestCase
 
 
 class AuthenticationCoachTestCase(APITestCase):
+    fixtures = ["database_prototype.json"]
+
     def setUp(self):
-        self.user = User.objects.create_superuser(username="admin", password="admin")
+        self.user = User.objects.get(pk=2)
         self.client.force_authenticate(self.user)
 
     def test_POST_request_with_authentication(self):
@@ -23,13 +25,8 @@ class AuthenticationCoachTestCase(APITestCase):
 
     def test_PATCH_request_with_authentication(self):
         """Test to verify if Coach PATCH request with authentication was authorized"""
-        self.coach = Coach.objects.create(
-            name="test",
-            specialty="test specialty",
-            email="test@mail.com",
-            phone="99 99999-9999",
-        )
 
+        self.coach = Coach.objects.get(pk=2)
         self.url = reverse("coach-update", kwargs={"pk": self.coach.pk})
         self.data = {
             "name": "test name",
@@ -43,12 +40,7 @@ class AuthenticationCoachTestCase(APITestCase):
 
     def test_DELETE_request_with_authentication(self):
         """Test to verify if Coach DELETE request with authentication was authorized"""
-        self.coach = Coach.objects.create(
-            name="test",
-            specialty="test specialty",
-            email="test@mail.com",
-            phone="99 99999-9999",
-        )
+        self.coach = Coach.objects.get(pk=2)
         self.url = reverse("coach-delete", kwargs={"pk": self.coach.pk})
         self.assertTrue(Coach.objects.filter(pk=self.coach.pk).exists())
         response = self.client.delete(self.url)
