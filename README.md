@@ -82,7 +82,7 @@ Your token expires in 30 minutes, so you'll need to regenerate it if you wish to
 
 ## Endpoints
 The full documentation for the API endpoints can be accessed after starting the server at:
-- [Alma-Ftv-API Documentation](http://127.0.0.1:8000/api/docs/alma/)
+- [Alma-Ftv-API Documentation](https://alma-ftv-project.onrender.com/api/docs/alma/)
 
 ### Example Endpoints
 - **POST** `/api/user/create/` - Create user accounts.
