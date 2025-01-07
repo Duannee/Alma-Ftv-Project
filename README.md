@@ -7,7 +7,7 @@
 The Alma-Ftv API is a tool that helps training center owners organize and control their business activities simply and efficiently. With it, you can manage student information, track payments and administer the coaches working at the center.
 
 ## Base URL
-The base URL to access the API is: [Api Alma Ftv](https://alma-ftv-project.onrender.com/api/user/create)
+The base URL to access the API is: [Api Alma Ftv](https://alma-ftv-project.onrender.com)
 
 ## Features
 - **Accounts**: Full CRUD operations for user accounts.
@@ -49,6 +49,21 @@ Start the server:
 ```bash
 python manage.py runserver
 ```
+## Running Tests
+
+This project includes a suite of unit and integration tests to ensure the API functions correctly.
+
+### How to Run Tests
+
+1. Ensure you have all the dependencies installed and the virtual environment activated.
+2. Run the following command to execute the tests:
+
+```bash
+python manage.py test
+```
+## Test Structure
+- Unit Tests: These tests cover individual units of functionality within the API.
+- Integration Tests: These tests ensure that various parts of the system work together as expected.
 
 ## Authentication
 This API uses authentication for POST, PATCH, PUT, and DELETE methods. To access these features, you need to include an authentication token in the request headers.
@@ -67,7 +82,7 @@ Your token expires in 30 minutes, so you'll need to regenerate it if you wish to
 
 ## Endpoints
 The full documentation for the API endpoints can be accessed after starting the server at:
-- [Alma-Ftv-API Documentation](http://127.0.0.1:8000/api/docs/alma/)
+- [Alma-Ftv-API Documentation](https://alma-ftv-project.onrender.com/api/docs/alma/)
 
 ### Example Endpoints
 - **POST** `/api/user/create/` - Create user accounts.
