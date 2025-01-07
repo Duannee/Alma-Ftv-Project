@@ -99,7 +99,7 @@ DATABASES = {
         "NAME": os.getenv("POSTGRES_DB"),
         "USER": os.getenv("POSTGRES_USER"),
         "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": "localhost",
+        "HOST": "dpg-crb02h56l47c73d1gk0g-a",
         "PORT": 5432,
     },
     "sqlite3_db": {
