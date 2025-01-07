@@ -95,17 +95,9 @@ WSGI_APPLICATION = "project_alma.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("POSTGRES_DB"),
-        "USER": os.getenv("POSTGRES_USER"),
-        "PASSWORD": os.getenv("POSTGRES_PASSWORD"),
-        "HOST": "dpg-ctupc1popnds73fp7bl0-a",
-        "PORT": 5432,
-    },
-    "sqlite3_db": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": BASE_DIR / "db.sqlite3",
-    },
+    }
 }
 
 DATABASE_URL = os.getenv("DATABASE_URL")
